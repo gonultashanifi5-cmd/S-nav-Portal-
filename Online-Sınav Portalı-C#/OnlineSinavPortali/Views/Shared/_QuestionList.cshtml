@@ -1,0 +1,35 @@
+@model IReadOnlyList<QuestionRow>
+@if (Model.Count == 0)
+{
+    <p class="empty-state">Henüz soru eklenmedi. İlk soruyu formdan ekleyin.</p>
+}
+else
+{
+    <ol class="question-list">
+        @foreach (var question in Model)
+        {
+            <li>
+                <div class="question-title">
+                    <span>@question.Text</span>
+                    <span class="points">@question.Points puan</span>
+                </div>
+                <ol class="answer-list" type="A">
+                    @for (var index = 0; index < question.Options.Count; index++)
+                    {
+                        <li>
+                            @question.Options[index]
+                            @if (index + 1 == question.CorrectOptionPosition)
+                            {
+                                <span class="correct-answer">Doğru cevap</span>
+                            }
+                        </li>
+                    }
+                </ol>
+                <div class="row-actions">
+                    <button type="button" class="text-link" data-action="edit" data-id="@question.Id">Soruyu düzenle</button>
+                    <button type="button" class="text-link danger" data-action="delete" data-id="@question.Id">Soruyu sil</button>
+                </div>
+            </li>
+        }
+    </ol>
+}

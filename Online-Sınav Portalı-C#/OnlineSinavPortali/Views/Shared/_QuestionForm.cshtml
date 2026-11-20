@@ -1,0 +1,47 @@
+@model QuestionFormViewModel
+<form id="question-form" class="portal-form" method="post">
+    @Html.AntiForgeryToken()
+    <input name="Id" type="hidden" value="@Model.Id" />
+    <p id="question-status" class="form-status" role="status"></p>
+    <fieldset id="question-controls" class="portal-form" aria-label="Soru bilgileri">
+        <div class="field">
+            <label asp-for="Text"></label>
+            <textarea asp-for="Text" rows="3" required maxlength="1000" aria-describedby="question-text-error"></textarea>
+            <span id="question-text-error" data-error-for="Text"></span>
+        </div>
+        <fieldset class="options-fields">
+            <legend>Seçenekler</legend>
+            @for (var index = 0; index < Model.Options.Count; index++)
+            {
+                var letter = (char)('A' + index);
+                var errorId = $"option-error-{index}";
+                <div class="option-field field">
+                    <label asp-for="Options[index].Text"><span class="visually-hidden">Seçenek </span>@letter</label>
+                    <div>
+                        <input asp-for="Options[index].Text" required maxlength="300" aria-describedby="@errorId" />
+                        <span id="@errorId" data-error-for="Options[@index].Text"></span>
+                    </div>
+                </div>
+            }
+        </fieldset>
+        <div class="question-fields">
+            <div class="field">
+                <label asp-for="CorrectOptionPosition"></label>
+                <select asp-for="CorrectOptionPosition" required aria-describedby="correct-option-error">
+                    <option value="">Seçin</option>
+                    <option value="1">A</option><option value="2">B</option><option value="3">C</option><option value="4">D</option>
+                </select>
+                <span id="correct-option-error" data-error-for="CorrectOptionPosition"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Points"></label>
+                <input asp-for="Points" required min="1" max="100" aria-describedby="points-error" />
+                <span id="points-error" data-error-for="Points"></span>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="portal-button primary" type="submit">Soruyu kaydet</button>
+            <button id="question-cancel" class="portal-button secondary" type="button" hidden>Vazgeç</button>
+        </div>
+    </fieldset>
+</form>

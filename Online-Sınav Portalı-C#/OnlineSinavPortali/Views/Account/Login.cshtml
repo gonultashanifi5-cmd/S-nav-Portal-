@@ -1,0 +1,21 @@
+@model LoginViewModel
+@{
+    Layout = "_LayoutAccount";
+    ViewData["Title"] = "Yönetici girişi";
+}
+<h1>Yönetici girişi</h1>
+<form asp-action="Login" method="post" class="portal-form">
+    <input asp-for="ReturnUrl" type="hidden" />
+    <div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+    <div class="field">
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" required maxlength="60" autocomplete="username" aria-describedby="username-error" />
+        <span asp-validation-for="UserName" id="username-error"></span>
+    </div>
+    <div class="field">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" required maxlength="128" autocomplete="current-password" aria-describedby="password-error" />
+        <span asp-validation-for="Password" id="password-error"></span>
+    </div>
+    <button class="portal-button primary" type="submit">Giriş yap</button>
+</form>

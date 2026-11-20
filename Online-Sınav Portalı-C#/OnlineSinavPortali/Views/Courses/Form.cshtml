@@ -1,0 +1,24 @@
+@model CourseFormViewModel
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Ders ekle" : "Dersi düzenle";
+}
+<a class="back-link" asp-action="Index">← Dersler</a>
+<h1>@ViewData["Title"]</h1>
+<form asp-action="Save" method="post" class="surface portal-form form-surface">
+    <input asp-for="Id" type="hidden" />
+    <div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+    <div class="field">
+        <label asp-for="Code"></label>
+        <input asp-for="Code" required maxlength="20" aria-describedby="code-error" />
+        <span asp-validation-for="Code" id="code-error"></span>
+    </div>
+    <div class="field">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" required maxlength="120" aria-describedby="name-error" />
+        <span asp-validation-for="Name" id="name-error"></span>
+    </div>
+    <div class="form-actions">
+        <button class="portal-button primary" type="submit">Dersi kaydet</button>
+        <a class="portal-button secondary" asp-action="Index">Vazgeç</a>
+    </div>
+</form>

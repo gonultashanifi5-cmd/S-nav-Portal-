@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] | Online Sınav Portalı</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="account-body">
+    <main class="account-shell">
+        <section class="account-brand">
+            <div class="brand"><span class="brand-mark" aria-hidden="true"></span><span>Online Sınav<br />Portalı</span></div>
+            <div class="sheet-art" aria-hidden="true">
+                <span></span><span></span><span></span><span></span>
+            </div>
+        </section>
+        <section class="account-content">
+            @RenderBody()
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,34 @@
+@model ExamDetailsViewModel
+@{
+    ViewData["Title"] = Model.Exam.Title;
+}
+<a class="back-link" asp-action="Index">← Sınavlar</a>
+<header class="page-heading exam-heading">
+    <div>
+        <h1>@Model.Exam.Title</h1>
+        <p class="exam-context"><span>@Model.Exam.CourseName</span><span>@Model.Exam.DurationMinutes dakika</span></p>
+    </div>
+    <div class="form-actions">
+        <a class="portal-button secondary" asp-action="Form" asp-route-id="@Model.Exam.Id">Sınavı düzenle</a>
+        <form asp-action="Delete" asp-route-id="@Model.Exam.Id" method="post" data-confirm="Bu sınav ve tüm soruları silinsin mi?">
+            <button class="portal-button danger" type="submit">Sınavı sil</button>
+        </form>
+    </div>
+</header>
+<noscript><p class="notice notice-error">Soruları yönetmek için tarayıcınızda JavaScript’i etkinleştirin.</p></noscript>
+<div class="question-layout"
+     id="question-workspace"
+     data-questions-url="@Url.Action("List", "Questions", new { examId = Model.Exam.Id })"
+     data-login-url="@Url.Action("Login", "Account", new { returnUrl = Context.Request.Path.Value })">
+    <section class="surface question-list-panel" aria-labelledby="question-list-title">
+        <header class="surface-heading"><h2 id="question-list-title">Sorular</h2></header>
+        <div id="question-list"><partial name="_QuestionList" model="Model.Questions" /></div>
+    </section>
+    <section class="surface form-surface question-form-panel" aria-labelledby="question-form-title">
+        <h2 id="question-form-title">Soru ekle</h2>
+        <partial name="_QuestionForm" model="Model.Question" />
+    </section>
+</div>
+@section Scripts {
+    <script src="~/js/questions.js" asp-append-version="true" defer></script>
+}

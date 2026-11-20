@@ -1,0 +1,20 @@
+@model IReadOnlyList<ExamRow>
+<table class="portal-table">
+    <caption class="visually-hidden">Sınav listesi</caption>
+    <thead>
+        <tr><th scope="col">Sınav</th><th scope="col">Süre</th><th scope="col">Soru sayısı</th></tr>
+    </thead>
+    <tbody>
+    @foreach (var exam in Model)
+    {
+        <tr>
+            <th scope="row">
+                <a class="text-link" asp-controller="Exams" asp-action="Details" asp-route-id="@exam.Id">@exam.Title</a>
+                <span class="row-meta">@exam.CourseName</span>
+            </th>
+            <td>@exam.DurationMinutes dk.</td>
+            <td>@exam.QuestionCount</td>
+        </tr>
+    }
+    </tbody>
+</table>

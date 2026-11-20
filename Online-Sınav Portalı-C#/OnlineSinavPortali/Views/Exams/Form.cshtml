@@ -1,0 +1,46 @@
+@model ExamFormViewModel
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Sınav ekle" : "Sınavı düzenle";
+}
+<a class="back-link" asp-action="Index">← Sınavlar</a>
+<h1>@ViewData["Title"]</h1>
+@if (Model.Courses.Count == 0)
+{
+    <div class="surface form-surface">
+        <p>Sınav oluşturmak için önce bir ders ekleyin.</p>
+        <a class="portal-button primary" asp-controller="Courses" asp-action="Form">Ders ekle</a>
+    </div>
+}
+else
+{
+    <form asp-action="Save" method="post" class="surface portal-form form-surface">
+        <input asp-for="Id" type="hidden" />
+        <div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+        <div class="field">
+            <label asp-for="CourseId"></label>
+            <select asp-for="CourseId" asp-items="Model.Courses" required aria-describedby="course-error"><option value="">Ders seçin</option></select>
+            <span asp-validation-for="CourseId" id="course-error"></span>
+        </div>
+        <div class="field">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" required maxlength="120" aria-describedby="title-error" />
+            <span asp-validation-for="Title" id="title-error"></span>
+        </div>
+        <div class="field">
+            <label asp-for="DurationMinutes"></label>
+            <input asp-for="DurationMinutes" min="1" max="300" required aria-describedby="duration-error" />
+            <span asp-validation-for="DurationMinutes" id="duration-error"></span>
+        </div>
+        <div class="form-actions">
+            <button class="portal-button primary" type="submit">Sınavı kaydet</button>
+            @if (Model.Id == 0)
+            {
+                <a class="portal-button secondary" asp-action="Index">Vazgeç</a>
+            }
+            else
+            {
+                <a class="portal-button secondary" asp-action="Details" asp-route-id="@Model.Id">Vazgeç</a>
+            }
+        </div>
+    </form>
+}

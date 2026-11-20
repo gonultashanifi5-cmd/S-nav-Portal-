@@ -1,0 +1,37 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Genel Bakış";
+}
+<header class="dashboard-heading">
+    <div>
+        <h1>Genel Bakış</h1>
+        <p>Dersleri, sınavları ve sınav sorularını yönetin.</p>
+    </div>
+    @if (Model.CourseCount == 0)
+    {
+        <a class="portal-button on-dark" asp-controller="Courses" asp-action="Form">Ders ekle</a>
+    }
+    else
+    {
+        <a class="portal-button on-dark" asp-controller="Exams" asp-action="Form">Sınav ekle</a>
+    }
+</header>
+<dl class="dashboard-totals" aria-label="Kayıt sayıları">
+    <div><dt>Ders</dt><dd>@Model.CourseCount</dd></div>
+    <div><dt>Sınav</dt><dd>@Model.ExamCount</dd></div>
+    <div><dt>Soru</dt><dd>@Model.QuestionCount</dd></div>
+</dl>
+<section class="surface" aria-labelledby="recent-exams">
+    <header class="surface-heading">
+        <h2 id="recent-exams">Son eklenen sınavlar</h2>
+        <a class="text-link" asp-controller="Exams" asp-action="Index">Tüm sınavlar</a>
+    </header>
+    @if (Model.RecentExams.Count == 0)
+    {
+        <p class="empty-state">Henüz sınav eklenmedi.</p>
+    }
+    else
+    {
+        <partial name="_ExamTable" model="Model.RecentExams" />
+    }
+</section>
